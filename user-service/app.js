@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+require("dotenv").config();
 const routes = require("./routes/");
 const port = process.env.PORT || 4001;
 
-mongoose.connect("mongodb://localhost:27017/helmi_sugandi_db", {
+mongoose.connect(process.env.DB_HOST, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
