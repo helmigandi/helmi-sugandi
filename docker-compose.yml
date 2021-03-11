@@ -1,0 +1,53 @@
+version: "3.8" # Get the Highest Version
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4.2-bionic
+    ports:
+      - 27017:27017
+    networks:
+      - node_network
+  redis:
+    container_name: redis
+    image: redis:6.2
+    ports:
+      - 6379:6379
+    networks:
+      - node_network
+  user-service:
+    container_name: user-service
+    image: helmiz21/user-service:1.0
+    ports:
+      - 4001:4001
+    depends_on:
+      - mongo
+    environment:
+      - DB_HOST=mongodb://mongo:27017/helmi_sugandi_db
+      - JWT_KEY=Codeid
+    networks:
+      - node_network
+  orchestrator:
+    container_name: orchestrator
+    image: helmiz21/orchestrator:1.0
+    ports:
+      - 4000:4000
+    depends_on:
+      - redis
+      - user-service
+    environment:
+      - JWT_KEY=Codeid
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - USER_SERVICE_URL=http://user-service:4001
+    networks:
+      - node_network
+
+networks:
+  node_network:
+    name: node_network
+
+# For build automatically from dockerfile
+# build:
+#   context: .
+#   dockerfile: ./orchestrator/Dockerfile
