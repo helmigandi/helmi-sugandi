@@ -1,5 +1,5 @@
 function generateUrl() {
-  return "http://localhost:4001";
+  return process.env.USER_SERVICE_URL || "http://localhost:4001";
 }
 
 module.exports = generateUrl;
