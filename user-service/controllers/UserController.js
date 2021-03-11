@@ -24,7 +24,6 @@ class UserController {
 
   static async getIdentityNumber(req, res) {
     const { identityNumber } = req.params;
-    console.log(req.params);
     try {
       const dataUsers = await User.findOne({ identityNumber });
       res.status(200).json(dataUsers);
@@ -75,7 +74,6 @@ class UserController {
     try {
       const dataUsers = await User.findByIdAndRemove(_id);
       res.status(200).json(dataUsers);
-      console.log(dataUsers);
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
