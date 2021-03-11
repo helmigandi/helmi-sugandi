@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-SECRET_KEY = process.env.JWT_KEY;
+SECRET_KEY = process.env.JWT_KEY || "Testing-JWT";
 
 function generateJwt() {
   // 26859467879631251615372947948
